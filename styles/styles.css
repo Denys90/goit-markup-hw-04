@@ -6,6 +6,8 @@
   --color-thirdary: #2196f3;
   --color-light-gray: #f5f4fa;
   --color-icon: #afb1b8;
+  --color-shadow-card: 0px 1px 1px rgba(0, 0, 0, 0.12),
+    0px 4px 4px rgba(0, 0, 0, 0.06), 1px 4px 6px rgba(0, 0, 0, 0.16);
 }
 
 body {
@@ -14,6 +16,7 @@ body {
   font-family: "Roboto", sans-serif;
   color: var(--color-primary);
   background-color: var(--color-white-color);
+  position: relative;
 }
 /* --------Утилиты----------- */
 .container {
@@ -168,6 +171,22 @@ p {
   margin-right: 10px;
 }
 
+.current-page {
+  position: relative;
+  color: var(--color-thirdary);
+}
+.current-page::after {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--color-thirdary);
+}
+
 /* Sectoin-hero */
 
 .hero {
@@ -236,6 +255,48 @@ p {
   outline: none;
 }
 
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 528px;
+  height: 581px;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-white-color);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transform: translate y(100%);
+}
+
+.backdrop.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.invis-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  margin-right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--color-white-color);
+  border-color: var(--color-light-gray);
+}
+
 /* First-section */
 
 .icons {
@@ -302,10 +363,50 @@ p {
 }
 
 .img-list .list-work {
+  position: relative;
   margin-right: 30px;
 }
 .list-work:nth-child(3n) {
   margin-right: 0px;
+}
+.thumb {
+  position: absolute;
+  top: 224px;
+  left: 0px;
+  width: 100%;
+  height: 70px;
+  background: rgba(47, 48, 58, 0.8);
+  overflow: hidden;
+}
+.thumb-text-desctop {
+  margin: 27px 107px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+
+  color: var(--color-white-color);
+}
+.thumb-text-mobile {
+  margin: 27px 113px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+
+  color: var(--color-white-color);
+}
+.thumb-text-design {
+  margin: 27px 95px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+
+  color: var(--color-white-color);
 }
 
 /* Section 3 */
@@ -338,7 +439,6 @@ p {
 .list-team:nth-child(4n) {
   margin-right: 0px;
 }
-
 
 .subtitle {
   text-align: center;
@@ -595,18 +695,45 @@ p {
   max-width: 100%;
   height: auto;
 }
+.feture-description {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  top: 0px;
+  left: 0px;
+  width: 370px;
+  height: 294px;
+  background: rgba(33, 150, 243, 0.9);
+  transform: translate y(100%);
+
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.list-item:hover .feture-description {
+  transform: translate y(0);
+  opacity: 1;
+}
+
+.description-text {
+  margin: 0;
+  padding: 63px 24px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.56;
+  letter-spacing: inherit;
+  color: var(--color-white-color);
+}
 
 .shadow {
   display: block;
+  position: relative;
 }
 
 .shadow:hover {
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
-    1px 4px 6px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--color-shadow-card);
 }
 .shadow:focus {
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
-    1px 4px 6px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--color-shadow-card);
 }
 
 /* Button portfolio */
@@ -630,7 +757,8 @@ p {
   font-weight: 500;
   font-size: 16px;
   line-height: 1.6;
-  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 2px 2px rgba(0, 0, 0, 0.12); 
+  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08),
+    0px 2px 2px rgba(0, 0, 0, 0.12);
 }
 .btn:focus {
   background: var(--color-thirdary);
